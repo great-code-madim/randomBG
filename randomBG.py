@@ -16,16 +16,19 @@ def add_to_startup(file_path=""):
     with open(bat_path + '\\' + "open.bat", "w+") as bat_file:
         bat_file.write(r'python3 %s' % file_path)
 
+
+# Get location of file and set it as working directory.
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 USER_NAME = getpass.getuser()
 folder = os.getcwd() + "\\Wallpapers"
+add_to_startup(os.getcwd() + "\\randomBG.py")
 
 images = load_images_from_folder(folder)
 choice = folder + "\\" + images[randint(0, len(images)-1)]
-print(choice)
+
+# Windows specific function that changes the wallpaper.
 SPI_SETDESKWALLPAPER = 20
-add_to_startup(os.getcwd() + "\\randomBG.py") 
 ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, choice , 0)
